@@ -1,24 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create.user.dto';
 import { User } from './entity/user.entity';
+import { PrismaUserRepository } from './repository/prisma.user.repository';
 
 @Injectable()
 export class UsersService {
 
-
-  create(userDto: CreateUserDto): User {
-
-    const user = new User({
-      id: 0,
-      name: userDto.name,
-      email: userDto.email,
-      password: userDto.password,
-      role: 'staff',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    })
+  constructor(private readonly userRepository: PrismaUserRepository) {}
 
 
-    return user
+  create(userDto: CreateUserDto): Promise<User> {
+    return this.userRepository.create(userDto)
   }
+
+  findAll() : Promise<User[]> {
+    return this.userRepository.findAll()
+  }
+
 }

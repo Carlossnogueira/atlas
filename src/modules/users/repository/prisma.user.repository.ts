@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CreateUserDto } from "../dto/create.user.dto";
 import { User } from "../entity/user.entity";
 import { IUserRepository } from "./user.repository";
-import { PrismaService } from "src/shared/prisma.service";
+import { PrismaService } from "src/shared/prisma/prisma.service";
 
 
 @Injectable()

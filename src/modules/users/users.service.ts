@@ -14,13 +14,21 @@ export class UsersService {
   ) {}
 
 
-  async create(dto: CreateUserDto): Promise<User> {
+  async create(dto: CreateUserDto)  {
     const hashedPassword : string = await this.cryptoService.hash(dto.password!)
 
-    return this.userRepository.create({
-      ...dto,
+    const user = await this.userRepository.create({
+      name: dto.name!,
+      email: dto.email!,
       password: hashedPassword
     })
+
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email
+    }
+    
   }
 
   findAll() : Promise<User[]> {

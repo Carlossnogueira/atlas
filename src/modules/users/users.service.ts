@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create.user.dto';
 import { User } from './entity/user.entity';
 import { PrismaUserRepository } from './repository/prisma.user.repository';
@@ -16,6 +16,12 @@ export class UsersService {
 
 
   async create(dto: CreateUserDto) {
+
+    const userAlreadyExists = await this.userRepository.findByEmail(dto.email);
+
+    if (userAlreadyExists)
+      throw new ConflictException('Email already in use')
+
     const hashedPassword: string = await this.cryptoService.hash(dto.password!)
 
     const user = await this.userRepository.create({

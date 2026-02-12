@@ -41,11 +41,20 @@ export class PrismaUserRepository implements IUserRepository {
             email: string,
             password: string
         }) {
+            
+
         return this.prisma.user.update({
             where: { id },
             data,
         })
     }
 
+    /* FOR AUTHENTICATION */
+
+    async findByEmail(email: string) {
+        return this.prisma.user.findUnique({
+            where: { email },
+        })
+    }
 
 }

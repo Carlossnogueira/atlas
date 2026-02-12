@@ -12,3 +12,6 @@
 
 # Entry your database url, exmaple:
 DATABASE_URL="postgresql://atlas:atlas123@localhost:5432/atlas"
+
+# Your jwt secret key:
+JWT_SECRET="yourkeyhere"
